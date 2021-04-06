@@ -1,30 +1,29 @@
 <?php
 include "connection.php";
-if (isset($_POST['submit_register_trainer'])) {
-	$trainer_name = $_POST['trainer_name'];
-	$trainer_emailid = $_POST['trainer_emailid'];
-	$trainer_mobilenumber = $_POST['trainer_mobilenumber'];
-	$trainer_password1 = $_POST['trainer_password1'];
-	$trainer_password2 = $_POST['trainer_password2'];
-	$trainer_location = $_POST['trainer_location'];
-	$trainer_skills = $_POST['trainer_skills'];
-    $trainer_bio = $_POST['trainer_bio'];
+if (isset($_POST['submit_register_benef'])) {
+	$benef_name = $_POST['benef_name'];
+	$benef_address = $_POST['benef_address'];
+	$benef_emailid = $_POST['benef_emailid'];
+	$benef_mobilenumber = $_POST['benef_mobilenumber'];
+	$benef_password1 = $_POST['benef_password1'];
+	$benef_password2 = $_POST['benef_password2'];
+	$benef_location = $_POST['benef_location'];
+	$benef_category = $_POST['benef_category'];
 
-	if ($trainer_password1 != $trainer_password2) {
+	if ($benef_password1 != $benef_password2) {
 ?>
 		<script type="text/javascript">
 			alert("The passwords do not match");
 		</script>
 	<?php
 	} else {
-		$query = "INSERT INTO trainer(trainer_name,trainer_email,trainer_number,trainer_password,trainer_location,trainer_desc,trainer_skills) 
-		VALUES ('$trainer_name','$trainer_emailid','$trainer_mobilenumber','$trainer_password1','$trainer_location','$trainer_bio','$trainer_skills')";
+		$query = "INSERT INTO beneficiaries_details(benef_name,benef_address,benef_emailid,benef_mobilenumber,benef_password,benef_location,benef_category) 
+		VALUES ('$benef_name','$benef_address','$benef_emailid','$benef_mobilenumber','$benef_password1','$benef_location','$benef_category')";
 		// echo $query;
-        mysqli_query($con, $query) or die(mysqli_error($con));
-        
+		mysqli_query($con, $query) or die(mysqli_error($con));
 	?>
 		<script type="text/javascript">
-			window.location = 'trainer_login.php';
+			window.location = 'index.php';
 			alert("Successfully Added.");
 		</script>
 <?php
@@ -38,7 +37,7 @@ if (isset($_POST['submit_register_trainer'])) {
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Trainer Login</title>
+	<title>Clothing website</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -225,7 +224,7 @@ if (isset($_POST['submit_register_trainer'])) {
 	include("header.php");
 	?>
 	<div class="forms">
-		<h3>Trainer Registration</h3>
+		<h3>Beneficiary Registration</h3>
 		<form method="post" name="register">
 			<table>
 				<tr>
@@ -233,45 +232,57 @@ if (isset($_POST['submit_register_trainer'])) {
 						<label>Full Name</label>
 					</td>
 					<td>
-						<input type="text" name="trainer_name" required>
+						<input type="text" name="benef_name" required>
 					</td>
 				</tr>
 
 				<tr>
+					<td>
+						<label>Address</label>
+					</td>
+					<td>
+						<input type="varchar" name="benef_address" required>
+					</td>
+				</tr>
+				<tr>
 					<td><label>Email Id</label></td>
-					<td><input type="email" name="trainer_emailid" required></td>
+					<td><input type="email" name="benef_emailid" required></td>
 				</tr>
 				<tr>
 					<td><label>Mobile Number</label></td>
-					<td><input type="int" name="trainer_mobilenumber" required></td>
+					<td><input type="int" name="benef_mobilenumber" required></td>
 				</tr>
 
 				<tr>
 					<td><label>Password</label></td>
-					<td><input type="password" name="trainer_password1" required></td>
+					<td><input type="password" name="benef_password1" required></td>
 				</tr>
 
 				<tr>
 					<td><label>Confirm Password</label></td>
-					<td><input type="password" name="trainer_password2" required></td>
+					<td><input type="password" name="benef_password2" required></td>
 				</tr>
 				<tr>
 					<td><label>Location</label></td>
-					<td><input type="text" name="trainer_location" required></td>
-				</tr>
-                <tr>
-					<td><label>Bio: </label></td>
-					<td><input type="text" name="trainer_bio" required></td>
+					<td><input type="text" name="benef_location" required></td>
 				</tr>
 				<tr>
-						<td><label>Skills</label></td>
-						<td><input type="text" name="trainer_skills" required></td>
-					</tr>
+					<td><label>Category</label></td>
+					<td>
+						<select name="benef_category" id="benef_category">
+							<option value="" selected>None</option>
+							<option value="farmwaste">Farmwaste</option>
+							<option value="handicraft">Handicraft</option>
+							<option value="farmproduce">Farm Produce</option>
+							<option value="pottery">Pottery</option>
+						</select>
+					</td>
+				</tr>
 
 			</table>
-			<div><button type="submit" class="btn btn1" name="submit_register_trainer">REGISTER</button></div>
+			<div><button type="submit" class="btn btn1" name="submit_register_benef">REGISTER</button></div>
 
-			<a href="trainer_login.php">Already a registered Trainer? Login</a>
+			<a href="login.php">Already a member? Login</a>
 		</form>
 	</div>
 

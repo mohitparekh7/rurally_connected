@@ -1,18 +1,15 @@
 <?php
 session_start();
 include("connection.php");
-
-if (isset($_POST['trainer_login'])) {
-	$username = $_POST['username'];
-    $pswd = $_POST['pswd'];
-    $sql = mysqli_query($con, "select * from trainer where trainer_email='$username' && trainer_password='$pswd' ");
-	$num_rows = mysqli_num_rows($sql);
-	$row = mysqli_fetch_array($sql);
-    if ($num_rows > 0) {
-        $_SESSION['id'] = $row['trainer_id'];
-		$_SESSION['username'] = $row['trainer_name'];
-		$_SESSION['success'] = 'You are now logged in';
-        header('location:trainer_dashboard.php');
+extract($_REQUEST);
+if (isset($_SESSION['id'])) {
+    header("location:myproducts.php");
+}
+if (isset($login)) {
+    $sql = mysqli_query($con, "select * from vendor where vendor_email='$username' && vendor_password='$pswd' ");
+    if (mysqli_num_rows($sql)) {
+        $_SESSION['id'] = $username;
+        header('location:myproducts.php');
     } else {
         $admin_login_error = "Invalid Username or Password";
 		echo mysqli_error($con);
@@ -40,7 +37,7 @@ if (isset($_POST['trainer_login'])) {
 </head>
 <style type="text/css">
 	body {
-		/* background-image: url('images/bg11.jpg'); */
+		background-image: url('images/bg11.jpg');
 		background-position: right;
 	}
 
@@ -165,8 +162,8 @@ if (isset($_POST['trainer_login'])) {
 	?>
 
 	<div class="form1">
-		<h3>Trainer Login</h3>
-		<form method="post" name='form'>
+		<h3>Beneficiary Login</h3>
+		<form method="post" name='form' onsubmit="return valform()">
 			<table>
 				<tr>
 					<td><label for="username">Username:</label></td>
@@ -178,8 +175,8 @@ if (isset($_POST['trainer_login'])) {
 					<td><input type="password" id="pwd" placeholder="Enter password" required name="pswd"></td>
 				</tr>
 			</table>
-			<div><button type="submit" class="btn btn1" name="trainer_login">Login</button></div>
-			<a href="trainer_register.php">New Trainer? Sign Up</a>
+			<div><button type="submit" class="btn btn1" name="login">Login</button></div>
+			<a href="vendor_signup.php">Not a verified vendor? Sign Up</a>
 
 		</form>
 	</div>

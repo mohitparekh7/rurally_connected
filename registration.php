@@ -1,44 +1,13 @@
 <?php
-include "connection.php";
-if (isset($_POST['submit_register_trainer'])) {
-	$trainer_name = $_POST['trainer_name'];
-	$trainer_emailid = $_POST['trainer_emailid'];
-	$trainer_mobilenumber = $_POST['trainer_mobilenumber'];
-	$trainer_password1 = $_POST['trainer_password1'];
-	$trainer_password2 = $_POST['trainer_password2'];
-	$trainer_location = $_POST['trainer_location'];
-	$trainer_skills = $_POST['trainer_skills'];
-    $trainer_bio = $_POST['trainer_bio'];
-
-	if ($trainer_password1 != $trainer_password2) {
+include("connection.php");
 ?>
-		<script type="text/javascript">
-			alert("The passwords do not match");
-		</script>
-	<?php
-	} else {
-		$query = "INSERT INTO trainer(trainer_name,trainer_email,trainer_number,trainer_password,trainer_location,trainer_desc,trainer_skills) 
-		VALUES ('$trainer_name','$trainer_emailid','$trainer_mobilenumber','$trainer_password1','$trainer_location','$trainer_bio','$trainer_skills')";
-		// echo $query;
-        mysqli_query($con, $query) or die(mysqli_error($con));
-        
-	?>
-		<script type="text/javascript">
-			window.location = 'trainer_login.php';
-			alert("Successfully Added.");
-		</script>
-<?php
-	}
-}
-?>
-
 <!DOCTYPE html>
 <html>
 
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>Trainer Login</title>
+	<title>Company Registeration</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -225,53 +194,65 @@ if (isset($_POST['submit_register_trainer'])) {
 	include("header.php");
 	?>
 	<div class="forms">
-		<h3>Trainer Registration</h3>
+		<h3>Registration for Comapnies</h3>
 		<form method="post" name="register">
 			<table>
 				<tr>
 					<td>
-						<label>Full Name</label>
+						<label>Company Name</label>
 					</td>
 					<td>
-						<input type="text" name="trainer_name" required>
+						<input type="text" name="company_name" required>
 					</td>
 				</tr>
 
 				<tr>
+					<td>
+						<label>Address</label>
+					</td>
+					<td>
+						<input type="varchar" name="company_address" required>
+					</td>
+				</tr>
+				<tr>
 					<td><label>Email Id</label></td>
-					<td><input type="email" name="trainer_emailid" required></td>
+					<td><input type="email" name="company_emailid" required></td>
 				</tr>
 				<tr>
 					<td><label>Mobile Number</label></td>
-					<td><input type="int" name="trainer_mobilenumber" required></td>
+					<td><input type="int" name="company_number" required></td>
 				</tr>
 
 				<tr>
 					<td><label>Password</label></td>
-					<td><input type="password" name="trainer_password1" required></td>
+					<td><input type="password" name="company_password1" required></td>
 				</tr>
 
 				<tr>
 					<td><label>Confirm Password</label></td>
-					<td><input type="password" name="trainer_password2" required></td>
+					<td><input type="password" name="company_password2" required></td>
 				</tr>
 				<tr>
 					<td><label>Location</label></td>
-					<td><input type="text" name="trainer_location" required></td>
-				</tr>
-                <tr>
-					<td><label>Bio: </label></td>
-					<td><input type="text" name="trainer_bio" required></td>
+					<td><input type="text" name="company_location" required></td>
 				</tr>
 				<tr>
-						<td><label>Skills</label></td>
-						<td><input type="text" name="trainer_skills" required></td>
-					</tr>
+					<td><label>Category</label></td>
+					<td>
+						<select name="company_category" id="company_category">
+							<option value="" selected>None</option>
+							<option value="farmwaste" selected>Farmwaste</option>
+							<option value="handicraft" selected>Handicraft</option>
+							<option value="farmproduce" selected>Farm Produce</option>
+							<option value="pottery" selected>Pottery</option>
+						</select>
+					</td>
+				</tr>
 
 			</table>
-			<div><button type="submit" class="btn btn1" name="submit_register_trainer">REGISTER</button></div>
+			<div><button type="submit" class="btn btn1" name="submit_register_company">REGISTER</button></div>
 
-			<a href="trainer_login.php">Already a registered Trainer? Login</a>
+			<a href="login.php">Already a member? Login</a>
 		</form>
 	</div>
 
@@ -288,33 +269,32 @@ if (isset($_POST['submit_register_trainer'])) {
 </html>
 <?php
 include("connection.php");
-if (isset($_POST['submit_register'])) {
-	$user_name = $_POST['user_name'];
-	$user_address = $_POST['user_address'];
-	$user_emailid = $_POST['user_emailid'];
-	$user_mobilenumber = $_POST['user_mobilenumber'];
-	$password1 = $_POST['password1'];
-	$password2 = $_POST['password2'];
+if (isset($_POST['submit_register_company'])) {
+	$company_name = $_POST['company_name'];
+	$company_address = $_POST['company_address'];
+	$company_emailid = $_POST['company_emailid'];
+	$company_number = $_POST['company_number'];
+	$company_password1 = $_POST['company_password1'];
+	$company_password2 = $_POST['company_password2'];
+	$company_location = $_POST['company_location'];
+	$company_category = $_POST['company_category'];
 
-	if ($password1 != $password2) {
+	if ($company_password1 != $company_password2) {
 ?>
 		<script type="text/javascript">
 			alert("The passwords do not match");
 		</script>
 	<?php
 	} else {
-		$query = "INSERT INTO user_details(user_name,user_address,user_emailid,user_mobilenumber,user_password) VALUES ('$user_name','$user_address','$user_emailid','$user_mobilenumber','$password1')";
-		mysqli_query($con, $query) or die('Error in updating database');
-
-		// 	
+		$query = "INSERT INTO companies_details(company_name,company_address,company_emailid,company_number,company_password,company_location,company_category) 
+		VALUES ('$company_name','$company_address','$company_emailid','$company_number','$company_password1','$company_location','$company_category')";
+		mysqli_query($con, $query) or die(mysqli_error($con));
 	?>
-		// <script type="text/javascript">
+		<script type="text/javascript">
 			window.location = 'login.php';
 			alert("Successfully Added.");
-
-			// 		
 		</script>
-		// <?php
-		}
+<?php
 	}
-			?>
+}
+?>
